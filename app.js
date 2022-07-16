@@ -9,6 +9,7 @@ const multer = require('multer');
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
 const contactRoutes = require('./routes/contact');
+const egitimBilgisiRoutes = require('./routes/egitim');
 const app = express();
 
 /* const fileStorage = multer.diskStorage({
@@ -52,7 +53,9 @@ app.use(
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  //res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader(
     'Access-Control-Allow-Methods',
     'OPTIONS, GET, POST, PUT, PATCH, DELETE'
@@ -64,6 +67,8 @@ app.use((req, res, next) => {
 app.use('/feed', feedRoutes);
 app.use('/auth', authRoutes);
 app.use('/contact', contactRoutes);
+app.use('/egitim', egitimBilgisiRoutes);
+
 
 app.use((error, req, res, next) => {
   console.log(error);
