@@ -12,12 +12,12 @@ router.get('/egitimbilgisi',isAuth,
 
 // POST /feed/post
 router.post(
-  '/egitimbilgisi',isAuth,
+  '/:personelId/egitimbilgisi',isAuth,
   [
-    body('name')
+    body('aciklama')
       .trim()
       .isLength({ min: 2 }),
-    body('surname')
+    body('bolum')
       .trim()
       .isLength({ min: 2 })
   ],

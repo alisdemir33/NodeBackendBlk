@@ -54,10 +54,12 @@ exports.createEgitimBilgisi = (req, res, next) => {
   const bitisYili = req.body.bitisYili;
   const gpa = req.body.gpa;
   const aciklama = req.body.aciklama; 
+  const userId = req.body.creator; 
+  const personelId = req.params.personelId;
 
   let creator;
 
-  const egitimBilgisi = new egitimBilgisi({
+  const egitimBilgi = new Egitim({
     okulAdi: okulAdi,
     bolum: bolum,
     ogrenimDurumu: ogrenimDurumu,
@@ -65,15 +67,16 @@ exports.createEgitimBilgisi = (req, res, next) => {
     bitisYili:bitisYili,
     gpa:gpa,
     aciklama:aciklama,
-    personelId: req.personelId,
+    personelId: personelId,//req.personelId,
+    creator:userId
   });
 
-  return egitimBilgisi
+  return egitimBilgi
     .save()  
     .then((result) => {
       res.status(201).json({
         message: "EgitimBilgisi created successfully!",
-        egitimBilgisi: egitimBilgisi,
+        egitimBilgi: egitimBilgi,
         creator: { _id: req.userId },
       });
     })
