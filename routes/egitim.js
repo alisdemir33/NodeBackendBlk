@@ -28,19 +28,19 @@ router.get('/egitimbilgisi/:egitimbilgisiId', isAuth,
 egitimController.getEgitimBilgisi);
 
 router.put(
-  '/egitimbilgisi/:egitimbilgisiId',isAuth,
+  '/egitimbilgisi/:egitimBilgisiId',isAuth,
   [
-    body('name')
+    body('aciklama')
       .trim()
       .isLength({ min: 2 }),
-    body('surname')
+    body('bolum')
       .trim()
       .isLength({ min: 2 })
   ],
   egitimController.updateEgitimBilgisi
 );
 
-router.delete('/egitimbilgisi/:egitimbilgisiId',isAuth,
-egitimController.deleteEgitimBilgisi);
+router.delete('/egitimbilgisi/:idList',isAuth,
+egitimController.deleteEgitimBilgisiList);
 
 module.exports = router;

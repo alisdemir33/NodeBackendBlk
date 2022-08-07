@@ -115,12 +115,8 @@ exports.updateEgitimBilgisi = (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
-  const name = req.body.name;
-  let surname = req.body.surname;
-  let phone = req.body.phone;
-  let creator;  
 
-  EgitimBilgisi.findById(egitimBilgisiId)
+  Egitim.findById(egitimBilgisiId)
     .then((egitimBilgisi) => {
       if (!egitimBilgisi) {
         const err = new Error("Egitim Bilgisi Not Found!");
@@ -134,10 +130,25 @@ exports.updateEgitimBilgisi = (req, res, next) => {
         throw err;
       }
     
+      const okulAdi = req.body.okulAdi;
+      const bolum = req.body.bolum;
+      const ogrenimDurumu = req.body.ogrenimDurumu;
+      const baslangicYili = req.body.baslangicYili;
+      const bitisYili = req.body.bitisYili;
+      const gpa = req.body.gpa;
+      const aciklama = req.body.aciklama; 
+      const userId = req.body.creator; 
+      const personelId = req.body.personelId;
 
-      egitimBilgisi.name = name;
-      egitimBilgisi.surname = surname;
-      egitimBilgisi.phone = phone;
+      egitimBilgisi.okulAdi = okulAdi;
+      egitimBilgisi.bolum = bolum;
+      egitimBilgisi.ogrenimDurumu = ogrenimDurumu;
+      egitimBilgisi.baslangicYili = baslangicYili;
+      egitimBilgisi.bitisYili = bitisYili;
+      egitimBilgisi.gpa = gpa;
+      egitimBilgisi.aciklama = aciklama;
+      egitimBilgisi.userId = userId;
+      egitimBilgisi.personelId = personelId;
 
       return egitimBilgisi.save();
     })
@@ -197,7 +208,49 @@ exports.updateEgitimBilgisi = (req, res, next) => {
     });
 }; */
 
-exports.deleteEgitimBilgisi = (req, res, next) => {
+exports.deleteEgitimBilgisiList = (req, res, next) => {
+  let idListToDelete = req.params.idList.split(',');
+
+  Egitim.deleteMany( {"creator": req.userId , _id : {$in: idListToDelete}})
+  .then((result) => {
+    console.log(result);
+    res.status(200).json({ message: "Egitim Bilgisi Deleted" ,resultObj :result});
+  })
+  .catch((err) => {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  });
+
+ /* Egitim.findById(idListToDelete[0])
+    .then((egitimBilgisi) => {
+      //check user
+      if (!egitimBilgisi) {
+        const error = new Error("Could not find Egitim Bilgisi.");
+        error.statusCode = 404;
+        throw error;
+      }
+      if (egitimBilgisi.creator.toString() !== req.userId) {
+        const err = new Error("Not Authorized!");
+        err.statusCode = 403;
+        throw err;
+      }
+    
+      return Egitim.findByIdAndRemove(egitimBilgisi);
+    })   
+    .then((result) => {
+      res.status(200).json({ message: "Egitim Bilgisi Deleted" });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });*/
+};
+
+/*exports.deleteEgitimBilgisi = (req, res, next) => {
   const egitimBilgisiId = req.params.egitimBilgisiId;
   EgitimBilgisi.findById(egitimBilgisiId)
     .then((egitimBilgisi) => {
@@ -224,5 +277,5 @@ exports.deleteEgitimBilgisi = (req, res, next) => {
       }
       next(err);
     });
-};
+};*/
 
