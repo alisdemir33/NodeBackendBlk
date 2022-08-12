@@ -52,7 +52,8 @@ const egitimBilgisiSchema = new Schema(
     }
   } 
   ,
-  { timestamps: true }  
+  { timestamps: true } 
+   
 );
 
 module.exports = mongoose.model('Egitim', egitimBilgisiSchema);
