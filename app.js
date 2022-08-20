@@ -10,6 +10,7 @@ const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
 const contactRoutes = require('./routes/contact');
 const egitimBilgisiRoutes = require('./routes/egitim');
+const personelRoutes = require('./routes/personel');
 const app = express();
 
 /* const fileStorage = multer.diskStorage({
@@ -68,6 +69,7 @@ app.use('/feed', feedRoutes);
 app.use('/auth', authRoutes);
 app.use('/contact', contactRoutes);
 app.use('/egitim', egitimBilgisiRoutes);
+app.use('/personel', personelRoutes);
 
 
 app.use((error, req, res, next) => {
