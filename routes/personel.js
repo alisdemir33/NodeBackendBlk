@@ -6,8 +6,8 @@ const personelController = require('../controllers/personel');
 
 const router = express.Router();
 
-// GET /personel/personel
-router.get('/personellistesi',isAuth,
-personelController.getPersonelList);
+// post /personel/personellistesi
+router.post('/personellistesi',isAuth,
+personelController.getPersonelListByPage);
 
 module.exports =router;
